@@ -15,9 +15,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
-_Static_assert(CHAR_BIT == 0x8u);
+_Static_assert(CHAR_WIDTH == 0x8u);
 
-typeof_unqual (agbsum_dat) agbsum_dat;
+typeof (agbsum_dat) agbsum_dat;
 
 int main(int const argc,char const * const * const argv) {
 	agbsum_initdat();

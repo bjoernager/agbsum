@@ -1,3 +1,8 @@
+| 1
+
+- Use typeof instead of typeof_unqual;
+- Use CHAR_WIDTH instead of CHAR_BIT;
+
 | 0
 
 - Initial;

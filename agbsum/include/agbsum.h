@@ -17,9 +17,9 @@
 /* Temporary C2x support: */
 #define constexpr static const /* This can make arrays variadic-length. */
 #define nullptr NULL
-#define typeof_unqual __typeof__
+#define typeof __typeof__
 
-constexpr uint_least64_t agbsum_ver = 0x0u;
+constexpr uint_least64_t agbsum_ver = 0x1u;
 
 constexpr size_t agbsum_romstart = 0xA0u;
 
