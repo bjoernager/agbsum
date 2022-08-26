@@ -6,7 +6,7 @@ cmake_minimum_required(
 project(
 	agbsum
 	VERSION
-	1
+	2
 	DESCRIPTION
 	"GBA ROM header checksum patcher."
 	HOMEPAGE_URL
