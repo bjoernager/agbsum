@@ -21,7 +21,7 @@
 #define nullptr NULL
 #define typeof __typeof__
 
-constexpr uint_least64_t agbsum_ver = 0x2u;
+constexpr uint_least64_t agbsum_ver = 0x5u;
 
 constexpr size_t agbsum_romstart = 0xA0u;
 

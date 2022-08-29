@@ -1,3 +1,7 @@
+| 5
+
+- Fix version number not being updated;
+
 | 4
 
 - Fix wrong license notice type being used;
