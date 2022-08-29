@@ -1,3 +1,8 @@
+| 3
+
+- Add message to static assertion in main;
+- Fix license notices saying 'GNU General Public License' instead of 'GNU Affero General Public License';
+
 | 2
 
 - Fix indentations;
