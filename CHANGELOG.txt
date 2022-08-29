@@ -1,3 +1,7 @@
+| 4
+
+- Fix wrong license notice type being used;
+
 | 3
 
 - Add message to static assertion in main;
