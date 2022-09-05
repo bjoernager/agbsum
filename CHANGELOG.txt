@@ -1,3 +1,9 @@
+| 6
+
+- Fix errors during parameter checks;
+- Use susinfo more;
+- Update help screen;
+
 | 5
 
 - Fix version number not being updated;

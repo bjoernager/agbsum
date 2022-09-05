@@ -13,6 +13,7 @@
 #include <agbsum.h>
 
 #include <stdio.h>
+#include <sus/extra.h>
 #include <sus/os.h>
 #include <zap/mem.h>
 
@@ -39,7 +40,11 @@ static bool agbsum_chkchrparam(char const * const _param) {
 		agbsum_exit(agbsum_stat_ok);
 	case 'i':
 		{
-			if (paramval[0x0u] == '\x0') {agbsum_expectparamval(chrparam);}
+			sus_unlikely (paramval[0x0u] == '\x0') {agbsum_expectparamval(chrparam);}
+			sus_unlikely (agbsum_dat.pth != nullptr) {
+				fprintf(stderr,"ROM already set (to \"%s\", now \"%s\")\n",agbsum_dat.pth,paramval);
+				agbsum_exit(agbsum_stat_err);
+			}
 #if defined(sus_os_win)
 #else
 			struct stat statstruct;
@@ -80,7 +85,7 @@ void agbsum_chkparams(int const _argc,char const * const * const _argv) {
 				if (param[0x1u] == '-') {
 					char const * const lngparam = &param[0x2u];
 					if (lngparam[0x0u] == '\x0') {
-						fputs("Missing longe parameter after '--' sequence\n",stderr);
+						fputs("Missing long parameter after '--' sequence\n",stderr);
 						agbsum_exit(agbsum_stat_err);
 					}
 					if (zap_streq(lngparam,"help")) {
@@ -90,16 +95,16 @@ void agbsum_chkparams(int const _argc,char const * const * const _argv) {
 					fprintf(stderr,"Invalid long parameter \"%s\"\n",lngparam);
 					agbsum_exit(agbsum_stat_err);
 				}
+				sus_unlikely (param[0x1u] == '\x0') {
+					fputs("Missing character parameter after '-'\n",stderr);
+					agbsum_exit(agbsum_stat_err);
+				}
 				for (char const * chrpos = &param[0x1u];;++chrpos) {if (agbsum_chkchrparam(chrpos)) {break;}}
 				continue;
 			}
-			if (agbsum_dat.pth != nullptr) {
-				fprintf(stderr,"ROM already set (to \"%s\", now \"%s\")\n",agbsum_dat.pth,param);
-				agbsum_exit(agbsum_stat_err);
-			}
 		}
 		if (agbsum_dat.pth == nullptr) {
-			fputs("ROM not set (missing parameter)\n",stderr);
+			fputs("ROM not set (missing character parameter 'i')\n",stderr);
 			agbsum_exit(agbsum_stat_err);
 		}
 	}

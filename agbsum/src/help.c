@@ -22,9 +22,9 @@ void agbsum_help(void) {
 	fputs("Usage: agbsum [options] <ROM>\n",stderr);
 	fputc('\n',stderr);
 	fputs("Options:\n",stderr);
-	fputs("    --help -h    Print an help screen\n",stderr);
+	fputs("    --help -h    Print the help screen\n",stderr);
 	fputs("    -p           Patch the ROM\n",stderr);
-	fputs("    -s           Don't print results\n",stderr);
+	fputs("    -s           Don't print the results\n",stderr);
 	fputc('\n',stderr);
 	fputs("Built at " __TIME__ ", " __DATE__ ".\n",stderr);
 }
