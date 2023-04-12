@@ -1,3 +1,15 @@
+| 7
+
+- Don't use susinfo;
+- Update CMake style;
+- Update code style;
+- Don't use global variables;
+- Update compiler options;
+- Fortify sources;
+- Don't use Zap;
+- Remove some errors;
+- Remove platform-specific behaviour;
+
 | 6
 
 - Fix errors during parameter checks;

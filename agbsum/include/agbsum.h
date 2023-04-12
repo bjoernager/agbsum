@@ -10,42 +10,52 @@
 	You should have received a copy of the GNU Affero General Public License along with agbsum. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#if !defined(agbsum_hdr)
+#ifndef agbsum_hdr
 #define agbsum_hdr
 
 #include <stdint.h>
 #include <stdio.h>
 
-/* Temporary C2x support: */
-#define constexpr static const /* This can make arrays variadic-length. */
-#define nullptr NULL
+// Temporary C23 support:
+#define constexpr static const // This can make arrays variadic-length.
+#ifndef __clang__
+#define bool _Bool
+#define false ((bool)+0x0u)
+#define nullptr (NULL)
+#define static_assert _Static_assert
+#define true ((bool)+0x1u)
 #define typeof __typeof__
+#endif
 
-constexpr uint_least64_t agbsum_ver = 0x6u;
+constexpr uint_least64_t agbsum_ver = 0x7u;
 
-constexpr size_t agbsum_romstart = 0xA0u;
-
-constexpr size_t agbsum_chksumoff = 0xBDu - agbsum_romstart;
+constexpr size_t agbsum_romstart  = 0xA0u;
+constexpr size_t agbsum_chksumoff = 0xBDu-agbsum_romstart;
 
 typedef enum {
 	agbsum_stat_err,
 	agbsum_stat_ok,
 } agbsum_stat;
 
-extern struct {
+typedef struct {
 	bool         dopat;
 	char const * pth;
 	bool         sil;
 	FILE *       rom;
 } agbsum_dat;
 
-             unsigned char agbsum_calc(     void const *  rom);
-             void          agbsum_chkparams(int           argc,  char const * const * argv);
-[[noreturn]] void          agbsum_exit(     agbsum_stat   stat);
-             void          agbsum_help(     void);
-             void          agbsum_initdat(  void);
-             void          agbsum_open(     void);
-             void          agbsum_pat(      unsigned char chksum);
-             void          agbsum_rd(       void  *       buf);
+uint8_t agbsum_calc(void const * rom);
+
+void agbsum_help(void);
+
+void agbsum_chkparams(agbsum_dat * dat,int argc,char const * const * argv);
+
+void agbsum_initdat(agbsum_dat * dat);
+
+FILE * agbsum_open(char const * pth);
+void   agbsum_pat( FILE *   rom,    unsigned char chksum);
+void   agbsum_rd(  void  *  buf,    FILE *        rom);
+
+[[noreturn]] void agbsum_exit(agbsum_stat stat,FILE * rom);
 
 #endif

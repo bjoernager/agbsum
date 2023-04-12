@@ -14,10 +14,13 @@
 
 #include <stdio.h>
 
-void agbsum_open(void) {
-	agbsum_dat.rom = fopen(agbsum_dat.pth,"r+");
-	if (agbsum_dat.rom == nullptr) {
-		fprintf(stderr,"Unable to open ROM \"%s\"\n",agbsum_dat.pth);
-		agbsum_exit(agbsum_stat_err);
+FILE * agbsum_open(char const * const pth) {
+	FILE * rom = fopen(pth,"r+");
+	
+	if (rom == nullptr) {
+		fputs("Unable to open ROM\n",stderr);
+		agbsum_exit(agbsum_stat_err,nullptr);
 	}
+
+	return rom;
 }

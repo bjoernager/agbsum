@@ -1,20 +1,11 @@
-cmake_minimum_required(
-	VERSION
-	3.21
-)
+cmake_minimum_required(VERSION 3.21)
 
 project(
 	agbsum
-	VERSION
-	6
-	DESCRIPTION
-	"GBA ROM header checksum patcher."
-	HOMEPAGE_URL
-	"https://mandelbrot.dk/agbsum"
-	LANGUAGES
-	C
+	VERSION	7
+	DESCRIPTION "GBA ROM header checksum patcher."
+	HOMEPAGE_URL "https://mandelbrot.dk/agbsum"
+	LANGUAGES C
 )
 
-add_subdirectory(
-	agbsum
-)
+add_subdirectory(agbsum)

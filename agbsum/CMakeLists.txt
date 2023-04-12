@@ -1,19 +1,10 @@
-cmake_minimum_required(
-	VERSION
-	3.21
-)
+cmake_minimum_required(VERSION 3.21)
 
-set(
-	CMAKE_C_STANDARD
-	23
-)
-
-set(
-	CMAKE_C_STANDARD_REQUIRED
-)
+set(CMAKE_C_STANDARD 23)
 
 add_executable(
 	agbsum
+
 	"src/calc.c"
 	"src/chkparams.c"
 	"src/exit.c"
@@ -26,32 +17,26 @@ add_executable(
 )
 
 target_include_directories(
-	agbsum
-	PRIVATE
+	agbsum PRIVATE
+
 	"include"
 )
 
-target_link_libraries(
-	agbsum
-	PRIVATE
-	zap
+target_compile_definitions(
+	agbsum PRIVATE
+
+	_FORTIFY_SOURCE=$<IF:$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">,0x0,0x2>
 )
 
-if(
-	"${CMAKE_C_COMPILER_ID}"
-	MATCHES
-	"Clang|GNU"
-)
+if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang|GNU")
 	target_compile_options(
-		agbsum
-		PRIVATE
-		-Ofast
+		agbsum PRIVATE
+
+		$<IF:$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">,-Og,-Ofast>
 		-Wall
 		-Wextra
-		-fPIC
+		-Wpedantic
 		-fdiagnostics-color=always
-		-gdwarf-2 # Clang 16 uses a different format.
-		-march=native
-		-pedantic-errors
+		-g
 	)
 endif()

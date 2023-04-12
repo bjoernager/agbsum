@@ -13,27 +13,35 @@
 #include <agbsum.h>
 
 #include <limits.h>
-#include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 
-_Static_assert(CHAR_WIDTH == 0x8u,"agbsum only support 8-bit byte systems");
-
-typeof (agbsum_dat) agbsum_dat;
+static_assert(CHAR_WIDTH == 0x8u,"agbsum only support 8-bit byte systems");
 
 int main(int const argc,char const * const * const argv) {
-	agbsum_initdat();
-	agbsum_chkparams(argc,argv);
-	agbsum_open();
-	unsigned char buf[agbsum_chksumoff + 0x1u];
-	agbsum_rd(buf);
+	agbsum_dat dat;
+
+	agbsum_initdat(&dat);
+
+	agbsum_chkparams(&dat,argc,argv);
+
+	dat.rom = agbsum_open(dat.pth);
+
+	unsigned char buf[agbsum_chksumoff+0x1u];
+
+	agbsum_rd(buf,dat.rom);
+
 	unsigned char const chksum    = agbsum_calc(buf);
 	unsigned char const romchksum = buf[agbsum_chksumoff];
-	if (romchksum == chksum || !agbsum_dat.dopat) {
-		if (!agbsum_dat.sil) {printf("\"%s\": %hhX (%hhX in file)\n",agbsum_dat.pth,chksum,romchksum);}
-		agbsum_exit(agbsum_stat_ok);
+
+	if (romchksum == chksum || !dat.dopat) {
+		if (!dat.sil) {printf("\"%s\": %hhX (%hhX in file)\n",dat.pth,chksum,romchksum);}
+		agbsum_exit(agbsum_stat_ok,dat.rom);
 	}
-	agbsum_pat(chksum);
-	if (!agbsum_dat.sil) {printf("\"%s\" @ %zX: %hhX => %hhX\n",agbsum_dat.pth,agbsum_romstart + agbsum_chksumoff,romchksum,chksum);}
-	agbsum_exit(agbsum_stat_ok);
+
+	agbsum_pat(dat.rom,chksum);
+
+	if (!dat.sil) {printf("\"%s\" @ %zX: %hhX => %hhX\n",dat.pth,agbsum_romstart+agbsum_chksumoff,romchksum,chksum);}
+
+	agbsum_exit(agbsum_stat_ok,dat.rom);
 }

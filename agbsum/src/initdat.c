@@ -12,9 +12,9 @@
 
 #include <agbsum.h>
 
-void agbsum_initdat(void) {
-	agbsum_dat.dopat = false;
-	agbsum_dat.pth   = nullptr;
-	agbsum_dat.sil   = false;
-	agbsum_dat.rom   = nullptr;
+void agbsum_initdat(agbsum_dat * const dat) {
+	dat->dopat = false;
+	dat->pth   = nullptr;
+	dat->sil   = false;
+	dat->rom   = nullptr;
 }

@@ -14,10 +14,11 @@
 
 #include <stdio.h>
 
-void agbsum_pat(unsigned char _chksum) {
-	fseek(agbsum_dat.rom,(long)(agbsum_romstart + agbsum_chksumoff),SEEK_SET);
-	if (fwrite(&_chksum,0x1u,0x1u,agbsum_dat.rom) != 0x1u) {
-		fprintf(stderr,"Unable to patch ROM \"%s\"\n",agbsum_dat.pth);
-		agbsum_exit(agbsum_stat_err);
+void agbsum_pat(FILE * const rom,unsigned char chksum) {
+	fseek(rom,(long)(agbsum_romstart+agbsum_chksumoff),SEEK_SET);
+
+	if (fwrite(&chksum,0x1u,0x1u,rom) != 0x1u) {
+		fputs("Unable to patch ROM\n",stderr);
+		agbsum_exit(agbsum_stat_err,rom);
 	}
 }

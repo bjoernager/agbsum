@@ -14,11 +14,12 @@
 
 #include <stdio.h>
 
-void agbsum_rd(void * const _buf) {
-	fseek(agbsum_dat.rom,agbsum_romstart,SEEK_SET); /* We only need to read the part of the ROM that is used for the checksum. */
-	size_t const num = agbsum_chksumoff + 0x1u;
-	if (fread(_buf,0x1u,num,agbsum_dat.rom) != num) {
-		fprintf(stderr,"Unable to read ROM \"%s\"\n",agbsum_dat.pth);
-		agbsum_exit(agbsum_stat_err);
+void agbsum_rd(void * const buf,FILE * rom) {
+	fseek(rom,agbsum_romstart,SEEK_SET); // We only need to read the part of the ROM that is used for the checksum.
+	size_t const num = agbsum_chksumoff+0x1u;
+	
+	if (fread(buf,0x1u,num,rom) != num) {
+		fputs("Unable to read ROM\n",stderr);
+		agbsum_exit(agbsum_stat_err,rom);
 	}
 }

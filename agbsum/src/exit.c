@@ -15,7 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void agbsum_exit(agbsum_stat const _stat) {
-	if (agbsum_dat.rom != nullptr) {fclose(agbsum_dat.rom);}
-	exit(_stat == agbsum_stat_ok ? EXIT_SUCCESS : EXIT_FAILURE);
+void agbsum_exit(agbsum_stat const stat,FILE * rom) {
+	if (rom != nullptr) {fclose(rom);}
+
+	exit(stat == agbsum_stat_ok ? EXIT_SUCCESS : EXIT_FAILURE);
 }

@@ -16,15 +16,17 @@
 #include <stdio.h>
 
 void agbsum_help(void) {
-	fputs("agbsum - Calculate GBA ROM header checksums.\n",stderr);
-	fprintf(stderr,"Release #%" PRIXLEAST64 ". Copyright 2022 Gabriel Jensen.\n",agbsum_ver);
-	fputc('\n',stderr);
-	fputs("Usage: agbsum [options] <ROM>\n",stderr);
-	fputc('\n',stderr);
-	fputs("Options:\n",stderr);
-	fputs("    --help -h    Print the help screen\n",stderr);
-	fputs("    -p           Patch the ROM\n",stderr);
-	fputs("    -s           Don't print the results\n",stderr);
-	fputc('\n',stderr);
-	fputs("Built at " __TIME__ ", " __DATE__ ".\n",stderr);
+	fprintf(stderr,
+		"agbsum - Calculate GBA ROM header checksums.\n"
+		"Release #%" PRIXLEAST64 ". Copyright 2022 Gabriel Jensen.\n"
+		"\n"
+		"Usage: agbsum [options] <ROM>\n"
+		"Options:\n"
+		"    --help -h    Print the help screen\n"
+		"    -p           Patch the ROM\n"
+		"    -s           Don't print the results\n"
+		"\n"
+		"Built at " __TIME__ ", " __DATE__ ".\n",
+		agbsum_ver
+	);
 }

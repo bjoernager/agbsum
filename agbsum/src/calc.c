@@ -12,10 +12,15 @@
 
 #include <agbsum.h>
 
-unsigned char agbsum_calc(void const * const _rom) {
-	unsigned char const * rom    = _rom;
-	unsigned char         chksum = 0x0u;
-	for (unsigned char const * pos = rom;pos != rom + agbsum_chksumoff;++pos) {chksum += *pos;}
-	chksum = -(0x19u + chksum);
+#include <stdint.h>
+
+uint8_t agbsum_calc(void const * const romptr) {
+	uint8_t const * rom    = romptr;
+	uint8_t         chksum = 0x0u;
+
+	for (unsigned char const * pos = rom;pos != rom+agbsum_chksumoff;++pos) {chksum += *pos;}
+
+	chksum = -(0x19u+chksum);
+
 	return chksum;
 }
