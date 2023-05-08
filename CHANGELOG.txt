@@ -1,3 +1,10 @@
+| 8
+
+- Update naming convention;
+- Support C++99;
+- Tag development releases;
+- Update copyright notices;
+
 | 7
 
 - Don't use susinfo;

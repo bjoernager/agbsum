@@ -1,19 +1,19 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.8)
 
-set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD 99)
 
 add_executable(
 	agbsum
 
-	"src/calc.c"
-	"src/chkparams.c"
-	"src/exit.c"
-	"src/help.c"
-	"src/initdat.c"
+	"src/chkpar.c"
+	"src/exi.c"
+	"src/getsum.c"
+	"src/hlp.c"
+	"src/inidat.c"
 	"src/main.c"
-	"src/open.c"
+	"src/opn.c"
 	"src/pat.c"
-	"src/rd.c"
+	"src/red.c"
 )
 
 target_include_directories(
@@ -25,7 +25,7 @@ target_include_directories(
 target_compile_definitions(
 	agbsum PRIVATE
 
-	_FORTIFY_SOURCE=$<IF:$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">,0x0,0x2>
+	_FORTIFY_SOURCE=$<IF:$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">,0,2>
 )
 
 if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang|GNU")

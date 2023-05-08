@@ -1,61 +1,62 @@
 /*
-	Copyright 2022 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Jensen.
 
 	This file is part of agbsum.
-
 	agbsum is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
 	agbsum is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-
 	You should have received a copy of the GNU Affero General Public License along with agbsum. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef agbsum_hdr
-#define agbsum_hdr
+#ifndef agb_hdr
+#define agb_hdr
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 
-// Temporary C23 support:
-#define constexpr static const // This can make arrays variadic-length.
-#ifndef __clang__
-#define bool _Bool
-#define false ((bool)+0x0u)
-#define nullptr (NULL)
-#define static_assert _Static_assert
-#define true ((bool)+0x1u)
-#define typeof __typeof__
+#if __STDC_VERSION__ > 199901
+#include <stdnoreturn.h>
+#else
+#ifdef __GNUC__
+#define _Noreturn __attribute__ ((noreturn))
+#elif defined(_MSC_VER)
+#define _Noreturn __declspec (noreturn)
+#else
+#define _Noreturn
+#endif
+#define noreturn _Noreturn
 #endif
 
-constexpr uint_least64_t agbsum_ver = 0x7u;
+#define agb_rel ((uint_least64_t)+0x9u)
 
-constexpr size_t agbsum_romstart  = 0xA0u;
-constexpr size_t agbsum_chksumoff = 0xBDu-agbsum_romstart;
+#define agb_romsrt    ((size_t)+0xA0u)
+#define agb_chksumoff ((size_t)+0xBDu-agb_romsrt)
 
 typedef enum {
-	agbsum_stat_err,
-	agbsum_stat_ok,
-} agbsum_stat;
+	agb_cnd_err,
+	agb_cnd_ok,
+} agb_cnd;
 
 typedef struct {
 	bool         dopat;
 	char const * pth;
 	bool         sil;
 	FILE *       rom;
-} agbsum_dat;
+} agb_dat;
 
-uint8_t agbsum_calc(void const * rom);
+uint8_t agb_getsum(void const * rom);
 
-void agbsum_help(void);
+void agb_pat(FILE * rom,unsigned char chksum);
 
-void agbsum_chkparams(agbsum_dat * dat,int argc,char const * const * argv);
+void agb_hlp(void);
 
-void agbsum_initdat(agbsum_dat * dat);
+void agb_chkpar(agb_dat * dat,int argc,char const * const * argv);
 
-FILE * agbsum_open(char const * pth);
-void   agbsum_pat( FILE *   rom,    unsigned char chksum);
-void   agbsum_rd(  void  *  buf,    FILE *        rom);
+void agb_inidat(agb_dat * dat);
 
-[[noreturn]] void agbsum_exit(agbsum_stat stat,FILE * rom);
+FILE * agb_opn(char const * pth);
+void   agb_red(void *       buf,FILE * rom);
+
+noreturn void agb_exi(agb_cnd stat,FILE * rom);
 
 #endif

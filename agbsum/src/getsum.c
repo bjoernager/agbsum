@@ -1,20 +1,23 @@
 /*
-	Copyright 2022 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Jensen.
 
 	This file is part of agbsum.
-
 	agbsum is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
 	agbsum is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-
 	You should have received a copy of the GNU Affero General Public License along with agbsum. If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <agbsum.h>
 
-void agbsum_initdat(agbsum_dat * const dat) {
-	dat->dopat = false;
-	dat->pth   = nullptr;
-	dat->sil   = false;
-	dat->rom   = nullptr;
+#include <stdint.h>
+
+uint8_t agb_getsum(void const * const romptr) {
+	uint8_t const * rom    = romptr;
+	uint8_t         chksum = 0x0u;
+
+	for (unsigned char const * pos = rom;pos != rom+agb_chksumoff;++pos) {chksum += *pos;}
+
+	chksum = -(0x19u+chksum);
+
+	return chksum;
 }
