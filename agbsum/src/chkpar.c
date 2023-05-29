@@ -13,16 +13,16 @@
 #include <stdio.h>
 #include <string.h>
 
-noreturn static void agb_xptparval(char const chrpar) {
+noreturn static void agb_expparval(char const chrpar) {
 	fprintf(stderr,"Expected value for character parameter '%c'\n",chrpar);
 	agb_exi(agb_cnd_err,NULL);
 }
 
-static bool agb_chkchrpar(agb_dat * const dat,char const * const par) {
+static bool agb_chkchrpar(agb_dat * const restrict dat,char const* const restrict par) {
 	char const chrpar = par[0x0u];
 	if (chrpar == '\x0') {return true;}
 
-	char const * const paramval = &par[0x1];
+	char const* const restrict paramval = &par[0x1];
 	
 	switch (chrpar) {
 	default:
@@ -30,10 +30,10 @@ static bool agb_chkchrpar(agb_dat * const dat,char const * const par) {
 		agb_exi(agb_cnd_err,NULL);
 	case 'h':
 		agb_hlp();
-		agb_exi(agb_cnd_ok,NULL);
+		agb_exi(agb_cnd_oky,NULL);
 	case 'i':
 		{
-			if (paramval[0x0u] == '\x0') {agb_xptparval(chrpar);}
+			if (paramval[0x0u] == '\x0') {agb_expparval(chrpar);}
 			dat->pth = paramval;
 		}
 		return true;
@@ -46,20 +46,20 @@ static bool agb_chkchrpar(agb_dat * const dat,char const * const par) {
 	}
 }
 
-void agb_chkpar(agb_dat * const dat,int const argc,char const * const * const argv) {
+void agb_chkpar(agb_dat * const restrict dat,int const argc,char const* const* const argv) {
 	if (argc < 0x2) {
 		agb_hlp();
-		agb_exi(agb_cnd_ok,NULL);
+		agb_exi(agb_cnd_oky,NULL);
 	}
 	else {
 		size_t const numpar = argc;
 
 		for (size_t pos = 0x1u;pos < numpar;++pos) {
 
-			char const * const par = argv[pos];
+			char const* const par = argv[pos];
 			if (par[0x0u] == '-') {
 				if (par[0x1u] == '-') {
-					char const * const lngparam = &par[0x2u];
+					char const* const lngparam = &par[0x2u];
 
 					if (lngparam[0x0u] == '\x0') {
 						fputs("Missing long parameter after '--' sequence\n",stderr);
@@ -68,7 +68,7 @@ void agb_chkpar(agb_dat * const dat,int const argc,char const * const * const ar
 
 					if (!strcmp(lngparam,"help")) {
 						agb_hlp();
-						agb_exi(agb_cnd_ok,NULL);
+						agb_exi(agb_cnd_oky,NULL);
 					}
 					
 					fprintf(stderr,"Invalid long parameter \"%s\"\n",lngparam);
@@ -80,7 +80,7 @@ void agb_chkpar(agb_dat * const dat,int const argc,char const * const * const ar
 					agb_exi(agb_cnd_err,NULL);
 				}
 
-				for (char const * chrpos = &par[0x1u];;++chrpos) {if (agb_chkchrpar(dat,chrpos)) {break;}}
+				for (char const* chrpos = &par[0x1u];;++chrpos) {if (agb_chkchrpar(dat,chrpos)) {break;}}
 
 				continue;
 			}

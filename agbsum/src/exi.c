@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void agb_exi(agb_cnd const cnd,FILE * rom) {
+void agb_exi(agb_cnd const cnd,FILE * restrict rom) {
 	if (rom != NULL) {fclose(rom);}
 
-	exit(cnd == agb_cnd_ok ? EXIT_SUCCESS : EXIT_FAILURE);
+	exit(cnd == agb_cnd_oky ? EXIT_SUCCESS : EXIT_FAILURE);
 }

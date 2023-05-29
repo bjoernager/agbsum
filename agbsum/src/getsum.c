@@ -11,13 +11,13 @@
 
 #include <stdint.h>
 
-uint8_t agb_getsum(void const * const romptr) {
-	uint8_t const * rom    = romptr;
-	uint8_t         chksum = 0x0u;
+uint8_t agb_getsum(void const* const restrict romptr) {
+	uint8_t const* restrict rom    = romptr;
+	uint8_t                 chksum = 0x0u;
 
-	for (unsigned char const * pos = rom;pos != rom+agb_chksumoff;++pos) {chksum += *pos;}
+	for (unsigned char const* restrict pos = rom;pos != rom+agb_chksumoff;++pos) {chksum += *pos;}
 
-	chksum = -(0x19u+chksum);
+	chksum = 0x0u-(0x19u+chksum);
 
 	return chksum;
 }

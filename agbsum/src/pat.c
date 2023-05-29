@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-void agb_pat(FILE * const rom,unsigned char chksum) {
+void agb_pat(FILE * const restrict rom,unsigned char chksum) {
 	fseek(rom,(long)(agb_romsrt+agb_chksumoff),SEEK_SET);
 
 	if (fwrite(&chksum,0x1u,0x1u,rom) != 0x1u) {

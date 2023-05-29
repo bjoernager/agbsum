@@ -11,7 +11,7 @@
 
 #include <stddef.h>
 
-void agb_inidat(agb_dat * const dat) {
+void agb_inidat(agb_dat * const restrict dat) {
 	dat->dopat = false;
 	dat->pth   = NULL;
 	dat->sil   = false;

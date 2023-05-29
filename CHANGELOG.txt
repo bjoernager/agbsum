@@ -1,3 +1,12 @@
+| 9
+
+- Don't record compilation time;
+- Fix version macro;
+- Restrict pointers;
+- Use fixed-width types;
+- Update naming convention;
+- Update pointer style;
+
 | 8
 
 - Update naming convention;

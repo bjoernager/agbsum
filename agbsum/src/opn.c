@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-FILE * agb_opn(char const * const pth) {
+FILE * agb_opn(char const* const restrict pth) {
 	FILE * rom = fopen(pth,"r+");
 	
 	if (rom == NULL) {

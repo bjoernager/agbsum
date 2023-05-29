@@ -13,11 +13,11 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#if CHAR_BIT != 0x8u
+#if CHAR_BIT != 0x8
 #error "agbsum only support 8-bit byte systems"
 #endif
 
-int main(int const argc,char const * const * const argv) {
+int main(int const argc,char const* const* const argv) {
 	agb_dat dat;
 
 	agb_inidat(&dat);
@@ -35,12 +35,12 @@ int main(int const argc,char const * const * const argv) {
 
 	if (romchksum == chksum || !dat.dopat) {
 		if (!dat.sil) {printf("\"%s\": %hhX (%hhX in file)\n",dat.pth,chksum,romchksum);}
-		agb_exi(agb_cnd_ok,dat.rom);
+		agb_exi(agb_cnd_oky,dat.rom);
 	}
 
 	agb_pat(dat.rom,chksum);
 
 	if (!dat.sil) {printf("\"%s\" @ %zX: %hhX => %hhX\n",dat.pth,agb_romsrt+agb_chksumoff,romchksum,chksum);}
 
-	agb_exi(agb_cnd_ok,dat.rom);
+	agb_exi(agb_cnd_oky,dat.rom);
 }

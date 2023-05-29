@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-void agb_red(void * const buf,FILE * rom) {
+void agb_red(void * const restrict buf,FILE * restrict rom) {
 	fseek(rom,agb_romsrt,SEEK_SET); // We only need to read the part of the ROM that is used for the checksum.
 	size_t const num = agb_chksumoff+0x1u;
 	
