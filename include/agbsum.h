@@ -24,7 +24,7 @@
 # define noreturn
 #endif
 
-#define agb_rel ((uint64_t)+0xAu)
+#define agb_rel ((uint64_t)+0xBu)
 
 #define agb_romsrt    ((size_t)+0xA0u)
 #define agb_chksumoff ((size_t)+0xBDu-agb_romsrt)

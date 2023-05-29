@@ -1,15 +1,17 @@
 RM := rm -f
 
 CFLAGS = \
+	-D_FORTIFY_SOURCE=2    \
+	-D_GNU_SOURCE          \
 	-Iinclude              \
+	-O3                    \
 	-Wall                  \
 	-Wextra                \
 	-Wmissing-declarations \
 	-Wpedantic             \
+	-g                     \
 	-o$(@)                 \
 	-std=c99
-
-BIN := agbsum
 
 OBJS := \
 	src/chkpar.o \
@@ -21,6 +23,8 @@ OBJS := \
 	src/opn.o    \
 	src/pat.o    \
 	src/red.o
+
+BIN := agbsum
 
 $(BIN): $(OBJS)
 	$(CC) -o$(BIN) $(OBJS)

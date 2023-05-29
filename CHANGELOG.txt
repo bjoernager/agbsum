@@ -1,3 +1,9 @@
+| B
+
+- Fortify sources;
+- Enable debug symbols;
+- Enable optimisations;
+
 | A
 
 - Use generic makefile instead of CMake;
