@@ -14,12 +14,12 @@
 uint8_t
 agb_getsum (void const* const restrict romptr)
 {
-	uint8_t const* restrict rom    = romptr;
-	uint8_t                 chksum = 0x0u;
+	uint8_t const* restrict rom = romptr;
+	uint8_t                 sum = 0x0u;
 
-	for (unsigned char const* restrict pos = rom;pos != rom+agb_chksumoff;++pos) {chksum += *pos;}
+	for (char unsigned const* restrict pos = rom; pos != rom + agb_sumoff; ++pos) {sum += *pos;}
 
-	chksum = 0x0u-(0x19u+chksum);
+	sum = 0x0u-(0x19u + sum);
 
-	return chksum;
+	return sum;
 }

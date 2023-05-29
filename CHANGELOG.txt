@@ -1,3 +1,11 @@
+| C
+
+- Clean up code;
+- Support version parameter;
+- Don't print help screen to stderr;
+- Add license notice to help;
+- Enable more warnings;
+
 | B
 
 - Fortify sources;

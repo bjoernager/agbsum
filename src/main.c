@@ -20,28 +20,28 @@
 int main (int const argc, char const* const* const argv)
 {
 	agb_dat dat;
-
 	agb_inidat (&dat);
-
 	agb_chkpar (&dat, argc, argv);
 
 	dat.rom = agb_opn (dat.pth);
 
-	unsigned char buf[agb_chksumoff+0x1u];
+	char unsigned buf[agb_sumoff + 0x1u];
 
 	agb_red (buf, dat.rom);
 
-	unsigned char const chksum    = agb_getsum (buf);
-	unsigned char const romchksum = buf[agb_chksumoff];
+	{
+		char unsigned const sum    = agb_getsum (buf);
+		char unsigned const romsum = buf[agb_sumoff];
 
-	if (romchksum == chksum || !dat.dopat) {
-		if (!dat.sil) {printf ("\"%s\": %hhX (%hhX in file)\n", dat.pth, chksum, romchksum);}
-		agb_exi (agb_cnd_oky, dat.rom);
+		if (romsum == sum || !dat.dopat) {
+			if (!dat.sil) {printf ("\"%s\": %hhX (%hhX in file)\n", dat.pth, sum, romsum);}
+			agb_exi (agb_cnd_oky, dat.rom);
+		}
+
+		agb_pat (dat.rom, sum);
+
+		if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_romsrt + agb_sumoff, romsum, sum);}
 	}
-
-	agb_pat (dat.rom, chksum);
-
-	if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_romsrt+agb_chksumoff, romchksum, chksum);}
 
 	agb_exi (agb_cnd_oky, dat.rom);
 }

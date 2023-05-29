@@ -11,11 +11,12 @@
 
 #include <stdio.h>
 
-void agb_pat (FILE * const restrict rom, unsigned char chksum)
+void
+agb_pat (FILE * const restrict rom, char unsigned sum)
 {
-	fseek (rom,(long)(agb_romsrt+agb_chksumoff), SEEK_SET);
+	fseek (rom,(long)(agb_romsrt + agb_sumoff), SEEK_SET);
 
-	if (fwrite (&chksum,0x1u,0x1u, rom) != 0x1u) {
+	if (fwrite (&sum,0x1u,0x1u, rom) != 0x1u) {
 		fputs ("Unable to patch ROM\n", stderr);
 		agb_exi (agb_cnd_err, rom);
 	}

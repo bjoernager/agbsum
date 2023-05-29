@@ -9,6 +9,7 @@
 
 #include <agbsum.h>
 
+#include <inttypes.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
@@ -58,7 +59,7 @@ agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* con
 	} else {
 		size_t const numpar = argc;
 
-		for (size_t pos = 0x1u;pos < numpar;++pos) {
+		for (size_t pos = 0x1u; pos < numpar; ++pos) {
 
 			char const* const par = argv[pos];
 			if (par[0x0u] == '-') {
@@ -74,6 +75,17 @@ agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* con
 						agb_hlp ();
 						agb_exi (agb_cnd_oky, NULL);
 					}
+
+					if (!strcmp (lngparam,"version")) {
+						printf(
+							"agbsum #%" PRIX64 "\n"
+							"Copyright 2022-2023 Gabriel Jensen.\n"
+							"\n",
+							agb_rel
+						);
+						agb_cpy();
+						agb_exi (agb_cnd_oky, NULL);
+					}
 					
 					fprintf (stderr,"Invalid long parameter \"%s\"\n", lngparam);
 					agb_exi (agb_cnd_err, NULL);
@@ -84,7 +96,7 @@ agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* con
 					agb_exi (agb_cnd_err, NULL);
 				}
 
-				for (char const* chrpos = &par[0x1u];;++chrpos) {if (agb_chkchrpar (dat, chrpos)) {break;}}
+				for (char const* chrpos = &par[0x1u];; ++chrpos) {if (agb_chkchrpar (dat, chrpos)) {break;}}
 
 				continue;
 			}

@@ -13,20 +13,18 @@
 #include <stdio.h>
 
 void
-agb_hlp (void)
+agb_cpy (void)
 {
-	printf (
-		"agbsum - Calculate GBA ROM header checksums.\n"
-		"Release #%" PRIX64 ". Copyright 2022-2023 Gabriel Jensen.\n"
-		"\n"
-		"Usage: agbsum [options] <ROM>\n"
-		"Options:\n"
-		"    --help -h    Print the help screen\n"
-		"    -p           Patch the ROM\n"
-		"    -s           Don't print the results\n"
-		"    --version    Don't print the results\n"
-		"\n",
-		agb_rel
+	fputs (
+		"This program is free software: you can redistribute it and/or modify it under\n"
+		"  the terms of the GNU General Public License as published by the Free Software\n"
+		"  Foundation, either version 3 of the License, or (at your option) any later\n"
+		"  version.\n"
+    	"This program is distributed in the hope that it will be useful, but WITHOUT ANY\n"
+		"  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR\n"
+		"  A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n"
+    	"You should have received a copy of the GNU General Public License along with\n"
+		"  this program. If not, see <https://www.gnu.org/licenses/>.\n",
+		stdout
 	);
-	agb_cpy();
 }

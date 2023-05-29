@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#if __STDC_VERSION__ > 199901
+#if __STDC_VERSION__ >= 201112
 # include <stdnoreturn.h>
 #elif defined(__GNUC__)
 # define noreturn __attribute__ ((__noreturn__))
@@ -24,10 +24,10 @@
 # define noreturn
 #endif
 
-#define agb_rel ((uint64_t)+0xBu)
+#define agb_rel ((uint64_t) + 0xCu)
 
-#define agb_romsrt    ((size_t)+0xA0u)
-#define agb_chksumoff ((size_t)+0xBDu-agb_romsrt)
+#define agb_romsrt    ((size_t) + 0xA0u)
+#define agb_sumoff ((size_t) + 0xBDu-agb_romsrt)
 
 typedef enum {
 	agb_cnd_err,
@@ -45,7 +45,10 @@ uint8_t
 agb_getsum (void const* restrict rom);
 
 void
-agb_pat (FILE * restrict rom, unsigned char chksum);
+agb_pat (FILE * restrict rom, char unsigned sum);
+
+void
+agb_cpy (void);
 
 void
 agb_hlp (void);
@@ -62,6 +65,7 @@ agb_opn (char const* restrict pth);
 void
 agb_red (void * restrict buf, FILE * restrict rom);
 
-noreturn void agb_exi (agb_cnd stat, FILE * rom);
+noreturn void
+agb_exi (agb_cnd stat, FILE * rom);
 
 #endif
