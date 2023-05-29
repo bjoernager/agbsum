@@ -9,20 +9,15 @@
 
 #include <agbsum.h>
 
-#include <inttypes.h>
 #include <stdio.h>
 
-void agb_hlp(void) {
-	fprintf(stderr,
-		"agbsum - Calculate GBA ROM header checksums.\n"
-		"Release #%" PRIX64 ". Copyright 2022-2023 Gabriel Jensen.\n"
-		"\n"
-		"Usage: agbsum [options] <ROM>\n"
-		"Options:\n"
-		"    --help -h    Print the help screen\n"
-		"    -p           Patch the ROM\n"
-		"    -s           Don't print the results\n"
-		"\n",
-		agb_rel
-	);
+void agb_red (void * const restrict buf, FILE * restrict rom)
+{
+	fseek (rom, agb_romsrt, SEEK_SET); // We only need to read the part of the ROM that is used for the checksum.
+	size_t const num = agb_chksumoff+0x1u;
+	
+	if (fread (buf,0x1u, num, rom) != num) {
+		fputs ("Unable to read ROM\n", stderr);
+		agb_exi (agb_cnd_err, rom);
+	}
 }

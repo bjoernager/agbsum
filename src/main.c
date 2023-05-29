@@ -17,30 +17,31 @@
 #error "agbsum only support 8-bit byte systems"
 #endif
 
-int main(int const argc,char const* const* const argv) {
+int main (int const argc, char const* const* const argv)
+{
 	agb_dat dat;
 
-	agb_inidat(&dat);
+	agb_inidat (&dat);
 
-	agb_chkpar(&dat,argc,argv);
+	agb_chkpar (&dat, argc, argv);
 
-	dat.rom = agb_opn(dat.pth);
+	dat.rom = agb_opn (dat.pth);
 
 	unsigned char buf[agb_chksumoff+0x1u];
 
-	agb_red(buf,dat.rom);
+	agb_red (buf, dat.rom);
 
-	unsigned char const chksum    = agb_getsum(buf);
+	unsigned char const chksum    = agb_getsum (buf);
 	unsigned char const romchksum = buf[agb_chksumoff];
 
 	if (romchksum == chksum || !dat.dopat) {
-		if (!dat.sil) {printf("\"%s\": %hhX (%hhX in file)\n",dat.pth,chksum,romchksum);}
-		agb_exi(agb_cnd_oky,dat.rom);
+		if (!dat.sil) {printf ("\"%s\": %hhX (%hhX in file)\n", dat.pth, chksum, romchksum);}
+		agb_exi (agb_cnd_oky, dat.rom);
 	}
 
-	agb_pat(dat.rom,chksum);
+	agb_pat (dat.rom, chksum);
 
-	if (!dat.sil) {printf("\"%s\" @ %zX: %hhX => %hhX\n",dat.pth,agb_romsrt+agb_chksumoff,romchksum,chksum);}
+	if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_romsrt+agb_chksumoff, romchksum, chksum);}
 
-	agb_exi(agb_cnd_oky,dat.rom);
+	agb_exi (agb_cnd_oky, dat.rom);
 }

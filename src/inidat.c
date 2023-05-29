@@ -9,13 +9,12 @@
 
 #include <agbsum.h>
 
-#include <stdio.h>
+#include <stddef.h>
 
-void agb_pat(FILE * const restrict rom,unsigned char chksum) {
-	fseek(rom,(long)(agb_romsrt+agb_chksumoff),SEEK_SET);
-
-	if (fwrite(&chksum,0x1u,0x1u,rom) != 0x1u) {
-		fputs("Unable to patch ROM\n",stderr);
-		agb_exi(agb_cnd_err,rom);
-	}
+void agb_inidat (agb_dat * const restrict dat)
+{
+	dat->dopat = false;
+	dat->pth   = NULL;
+	dat->sil   = false;
+	dat->rom   = NULL;
 }

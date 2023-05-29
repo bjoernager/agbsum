@@ -11,12 +11,12 @@
 
 #include <stdio.h>
 
-void agb_red(void * const restrict buf,FILE * restrict rom) {
-	fseek(rom,agb_romsrt,SEEK_SET); // We only need to read the part of the ROM that is used for the checksum.
-	size_t const num = agb_chksumoff+0x1u;
-	
-	if (fread(buf,0x1u,num,rom) != num) {
-		fputs("Unable to read ROM\n",stderr);
-		agb_exi(agb_cnd_err,rom);
+void agb_pat (FILE * const restrict rom, unsigned char chksum)
+{
+	fseek (rom,(long)(agb_romsrt+agb_chksumoff), SEEK_SET);
+
+	if (fwrite (&chksum,0x1u,0x1u, rom) != 0x1u) {
+		fputs ("Unable to patch ROM\n", stderr);
+		agb_exi (agb_cnd_err, rom);
 	}
 }

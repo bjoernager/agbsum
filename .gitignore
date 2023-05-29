@@ -1,3 +1,4 @@
 *.gba
+*.o
 *.sav
-/build
+/agbsum

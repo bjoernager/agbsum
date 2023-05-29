@@ -1,3 +1,11 @@
+| A
+
+- Use generic makefile instead of CMake;
+- Update coding style;
+- Move include and src directories to root;
+- Update gitignore;
+- Add install target to makefile;
+
 | 9
 
 - Don't record compilation time;

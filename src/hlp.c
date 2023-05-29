@@ -9,11 +9,22 @@
 
 #include <agbsum.h>
 
+#include <inttypes.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-void agb_exi(agb_cnd const cnd,FILE * restrict rom) {
-	if (rom != NULL) {fclose(rom);}
-
-	exit(cnd == agb_cnd_oky ? EXIT_SUCCESS : EXIT_FAILURE);
+void
+agb_hlp (void)
+{
+	fprintf (stderr,
+		"agbsum - Calculate GBA ROM header checksums.\n"
+		"Release #%" PRIX64 ". Copyright 2022-2023 Gabriel Jensen.\n"
+		"\n"
+		"Usage: agbsum [options] <ROM>\n"
+		"Options:\n"
+		"    --help -h    Print the help screen\n"
+		"    -p           Patch the ROM\n"
+		"    -s           Don't print the results\n"
+		"\n",
+		agb_rel
+	);
 }

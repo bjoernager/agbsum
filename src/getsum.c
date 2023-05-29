@@ -9,15 +9,17 @@
 
 #include <agbsum.h>
 
-#include <stdio.h>
+#include <stdint.h>
 
-FILE * agb_opn(char const* const restrict pth) {
-	FILE * rom = fopen(pth,"r+");
-	
-	if (rom == NULL) {
-		fputs("Unable to open ROM\n",stderr);
-		agb_exi(agb_cnd_err,NULL);
-	}
+uint8_t
+agb_getsum (void const* const restrict romptr)
+{
+	uint8_t const* restrict rom    = romptr;
+	uint8_t                 chksum = 0x0u;
 
-	return rom;
+	for (unsigned char const* restrict pos = rom;pos != rom+agb_chksumoff;++pos) {chksum += *pos;}
+
+	chksum = 0x0u-(0x19u+chksum);
+
+	return chksum;
 }

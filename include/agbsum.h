@@ -16,18 +16,15 @@
 
 #if __STDC_VERSION__ > 199901
 # include <stdnoreturn.h>
+#elif defined(__GNUC__)
+# define noreturn __attribute__ ((__noreturn__))
+#elif defined (_MSC_VER)
+# define noreturn __declspec (noreturn)
 #else
-# ifdef __GNUC__
-#  define _Noreturn __attribute__ ((noreturn))
-# elif defined(_MSC_VER)
-#  define _Noreturn __declspec (noreturn)
-# else
-#  define _Noreturn
-# endif
-# define noreturn _Noreturn
+# define noreturn
 #endif
 
-#define agb_rel ((uint64_t)+0x9u)
+#define agb_rel ((uint64_t)+0xAu)
 
 #define agb_romsrt    ((size_t)+0xA0u)
 #define agb_chksumoff ((size_t)+0xBDu-agb_romsrt)
@@ -44,19 +41,27 @@ typedef struct {
 	FILE *      rom;
 } agb_dat;
 
-uint8_t agb_getsum(void const* restrict rom);
+uint8_t
+agb_getsum (void const* restrict rom);
 
-void agb_pat(FILE * restrict rom,unsigned char chksum);
+void
+agb_pat (FILE * restrict rom, unsigned char chksum);
 
-void agb_hlp(void);
+void
+agb_hlp (void);
 
-void agb_chkpar(agb_dat * restrict dat,int argc,char const* const* restrict argv);
+void
+agb_chkpar (agb_dat * restrict dat, int argc, char const* const* restrict argv);
 
-void agb_inidat(agb_dat * restrict dat);
+void
+agb_inidat (agb_dat * restrict dat);
 
-FILE * agb_opn(char const* restrict pth);
-void   agb_red(void *      restrict buf,FILE * restrict rom);
+FILE *
+agb_opn (char const* restrict pth);
 
-noreturn void agb_exi(agb_cnd stat,FILE * rom);
+void
+agb_red (void * restrict buf, FILE * restrict rom);
+
+noreturn void agb_exi (agb_cnd stat, FILE * rom);
 
 #endif

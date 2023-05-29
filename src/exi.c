@@ -9,11 +9,13 @@
 
 #include <agbsum.h>
 
-#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-void agb_inidat(agb_dat * const restrict dat) {
-	dat->dopat = false;
-	dat->pth   = NULL;
-	dat->sil   = false;
-	dat->rom   = NULL;
+noreturn void
+agb_exi (agb_cnd const cnd, FILE * restrict rom)
+{
+	if (rom != NULL) {fclose (rom);}
+
+	exit (cnd == agb_cnd_oky ? EXIT_SUCCESS : EXIT_FAILURE);
 }
