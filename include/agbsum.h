@@ -24,22 +24,22 @@
 # define noreturn
 #endif
 
-#define agb_rel ((uint64_t) + 0xCu)
+#define agb_rel ((uint64_t) + 0xDu)
 
-#define agb_romsrt    ((size_t) + 0xA0u)
+#define agb_romsrt ((size_t) + 0xA0u)
 #define agb_sumoff ((size_t) + 0xBDu-agb_romsrt)
 
-typedef enum {
+enum agb_cnd {
 	agb_cnd_err,
 	agb_cnd_oky,
-} agb_cnd;
+};
 
-typedef struct {
+struct agb_dat {
 	bool        dopat;
 	char const* pth;
 	bool        sil;
 	FILE *      rom;
-} agb_dat;
+};
 
 uint8_t
 agb_getsum (void const* restrict rom);
@@ -54,10 +54,10 @@ void
 agb_hlp (void);
 
 void
-agb_chkpar (agb_dat * restrict dat, int argc, char const* const* restrict argv);
+agb_chkpar (struct agb_dat * restrict dat, int argc, char const* const* restrict argv);
 
 void
-agb_inidat (agb_dat * restrict dat);
+agb_inidat (struct agb_dat * restrict dat);
 
 FILE *
 agb_opn (char const* restrict pth);
@@ -66,6 +66,6 @@ void
 agb_red (void * restrict buf, FILE * restrict rom);
 
 noreturn void
-agb_exi (agb_cnd stat, FILE * rom);
+agb_exi (enum agb_cnd stat, FILE * rom);
 
 #endif

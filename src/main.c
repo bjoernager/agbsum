@@ -19,13 +19,13 @@
 
 int main (int const argc, char const* const* const argv)
 {
-	agb_dat dat;
+	struct agb_dat dat;
 	agb_inidat (&dat);
 	agb_chkpar (&dat, argc, argv);
 
 	dat.rom = agb_opn (dat.pth);
 
-	char unsigned buf[agb_sumoff + 0x1u];
+	char unsigned buf[agb_sumoff + 0x1];
 
 	agb_red (buf, dat.rom);
 
@@ -34,13 +34,14 @@ int main (int const argc, char const* const* const argv)
 		char unsigned const romsum = buf[agb_sumoff];
 
 		if (romsum == sum || !dat.dopat) {
+			// Don't patch the ROM if it's already okay or we're not allowed to.
 			if (!dat.sil) {printf ("\"%s\": %hhX (%hhX in file)\n", dat.pth, sum, romsum);}
 			agb_exi (agb_cnd_oky, dat.rom);
 		}
 
 		agb_pat (dat.rom, sum);
 
-		if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_romsrt + agb_sumoff, romsum, sum);}
+		if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_romsrt + agb_sumoff, romsum, sum);} // If we aren't supposed to print anything then don't.
 	}
 
 	agb_exi (agb_cnd_oky, dat.rom);

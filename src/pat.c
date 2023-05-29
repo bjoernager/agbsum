@@ -14,7 +14,7 @@
 void
 agb_pat (FILE * const restrict rom, char unsigned sum)
 {
-	fseek (rom,(long)(agb_romsrt + agb_sumoff), SEEK_SET);
+	fseek (rom, (long)(agb_romsrt + agb_sumoff), SEEK_SET);
 
 	if (fwrite (&sum,0x1u,0x1u, rom) != 0x1u) {
 		fputs ("Unable to patch ROM\n", stderr);

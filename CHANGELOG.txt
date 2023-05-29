@@ -1,3 +1,9 @@
+| D
+
+- Update run-time copyright notices;
+- Clean up code;
+- Add more comments;
+
 | C
 
 - Clean up code;

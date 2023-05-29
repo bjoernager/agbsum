@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 noreturn void
-agb_exi (agb_cnd const cnd, FILE * restrict rom)
+agb_exi (enum agb_cnd const cnd, FILE * restrict rom)
 {
 	if (rom != NULL) {fclose (rom);}
 

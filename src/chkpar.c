@@ -22,9 +22,9 @@ agb_expparval (char const chrpar)
 }
 
 static bool
-agb_chkchrpar (agb_dat * const restrict dat, char const* const restrict par)
+agb_chkchrpar (struct agb_dat * const restrict dat, char const* const restrict par)
 {
-	char const chrpar = par[0x0u];
+	char const chrpar = par[0x0];
 	if (chrpar == '\x0') {return true;}
 
 	char const* const restrict paramval = &par[0x1];
@@ -38,7 +38,7 @@ agb_chkchrpar (agb_dat * const restrict dat, char const* const restrict par)
 		agb_exi (agb_cnd_oky, NULL);
 	case 'i':
 		{
-			if (paramval[0x0u] == '\x0') {agb_expparval (chrpar);}
+			if (paramval[0x0] == '\x0') {agb_expparval (chrpar);}
 			dat->pth = paramval;
 		}
 		return true;
@@ -52,21 +52,24 @@ agb_chkchrpar (agb_dat * const restrict dat, char const* const restrict par)
 }
 
 void
-agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* const argv) {
+agb_chkpar (struct agb_dat * const restrict dat, int const argc, char const* const* const argv) {
 	if (argc < 0x2) {
 		agb_hlp ();
 		agb_exi (agb_cnd_oky, NULL);
 	} else {
-		size_t const numpar = argc;
+		size_t const numpar = argc; // Prettier.
 
-		for (size_t pos = 0x1u; pos < numpar; ++pos) {
+		for (ptrdiff_t pos = 0x1u; pos < (ptrdiff_t)numpar; ++pos) {
+			// Iterate over the parameters. One hyphen denotes character parameters (-h) whilst two denote long paramters (--help).
 
 			char const* const par = argv[pos];
-			if (par[0x0u] == '-') {
-				if (par[0x1u] == '-') {
-					char const* const lngparam = &par[0x2u];
+			if (par[0x0] == '-') {
+				if (par[0x1] == '-') {
+					char const* const lngparam = &par[0x2];
 
-					if (lngparam[0x0u] == '\x0') {
+					// Check long parameters.
+
+					if (lngparam[0x0] == '\x0') {
 						fputs ("Missing long parameter after '--' sequence\n", stderr);
 						agb_exi (agb_cnd_err, NULL);
 					}
@@ -77,12 +80,6 @@ agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* con
 					}
 
 					if (!strcmp (lngparam,"version")) {
-						printf(
-							"agbsum #%" PRIX64 "\n"
-							"Copyright 2022-2023 Gabriel Jensen.\n"
-							"\n",
-							agb_rel
-						);
 						agb_cpy();
 						agb_exi (agb_cnd_oky, NULL);
 					}
@@ -91,16 +88,20 @@ agb_chkpar (agb_dat * const restrict dat, int const argc, char const* const* con
 					agb_exi (agb_cnd_err, NULL);
 				}
 
-				if (par[0x1u] == '\x0') {
+				if (par[0x1] == '\x0') {
 					fputs ("Missing character parameter after '-'\n", stderr);
 					agb_exi (agb_cnd_err, NULL);
 				}
 
-				for (char const* chrpos = &par[0x1u];; ++chrpos) {if (agb_chkchrpar (dat, chrpos)) {break;}}
+				// Check character parameters.
+
+				for (char const* chrpos = &par[0x1];; ++chrpos) {if (agb_chkchrpar (dat, chrpos)) {break;}}
 
 				continue;
 			}
 		}
+
+		// We did not find the 'i' parameter, so we don't know where the ROM is.
 
 		if (dat->pth == NULL) {
 			fputs ("ROM not set (missing character parameter 'i')\n", stderr);

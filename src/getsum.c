@@ -19,7 +19,7 @@ agb_getsum (void const* const restrict romptr)
 
 	for (char unsigned const* restrict pos = rom; pos != rom + agb_sumoff; ++pos) {sum += *pos;}
 
-	sum = 0x0u-(0x19u + sum);
+	sum = 0x0u - (0x19u + sum);
 
 	return sum;
 }

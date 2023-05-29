@@ -15,9 +15,8 @@
 void
 agb_hlp (void)
 {
-	printf (
+	fputs (
 		"agbsum - Calculate GBA ROM header checksums.\n"
-		"Release #%" PRIX64 ". Copyright 2022-2023 Gabriel Jensen.\n"
 		"\n"
 		"Usage: agbsum [options] <ROM>\n"
 		"Options:\n"
@@ -26,7 +25,7 @@ agb_hlp (void)
 		"    -s           Don't print the results\n"
 		"    --version    Don't print the results\n"
 		"\n",
-		agb_rel
+		stdout
 	);
 	agb_cpy();
 }

@@ -15,7 +15,9 @@
 void
 agb_cpy (void)
 {
-	fputs (
+	printf (
+		"agbsum #%" PRIX64 " - Copyright 2022-2023 Gabriel Jensen.\n"
+		"\n"
 		"This program is free software: you can redistribute it and/or modify it under\n"
 		"  the terms of the GNU General Public License as published by the Free Software\n"
 		"  Foundation, either version 3 of the License, or (at your option) any later\n"
@@ -25,6 +27,6 @@ agb_cpy (void)
 		"  A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n"
     	"You should have received a copy of the GNU General Public License along with\n"
 		"  this program. If not, see <https://www.gnu.org/licenses/>.\n",
-		stdout
+		agb_rel
 	);
 }
