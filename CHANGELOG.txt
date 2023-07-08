@@ -1,3 +1,9 @@
+| E
+
+- Code style adjustments;
+- Add readme;
+- Update help screen;
+
 | D
 
 - Update run-time copyright notices;

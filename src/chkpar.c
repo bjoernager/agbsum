@@ -2,9 +2,24 @@
 	Copyright 2022-2023 Gabriel Jensen.
 
 	This file is part of agbsum.
-	agbsum is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-	agbsum is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-	You should have received a copy of the GNU Affero General Public License along with agbsum. If not, see <https://www.gnu.org/licenses/>.
+
+	agbsum is free software: you can redistribute it
+	and/or modify it under the terms of the GNU
+	Affero General Public License as published by
+	the Free Software Foundation, either version 3
+	of the License, or (at your option) any later
+	version.
+
+	agbsum is distributed in the hope that it will
+	be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more
+	details.
+
+	You should have received a copy of the GNU
+	Affero General Public License along with agbsum.
+	If not, see <https://www.gnu.org/licenses/>.
 */
 
 #include <agbsum.h>
@@ -14,7 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 
-noreturn static void 
+noreturn static void
 agb_expparval (char const chrpar)
 {
 	fprintf (stderr,"Expected value for character parameter '%c'\n", chrpar);
@@ -22,7 +37,7 @@ agb_expparval (char const chrpar)
 }
 
 static bool
-agb_chkchrpar (struct agb_dat * const restrict dat, char const* const restrict par)
+agb_chkchrpar (struct agb_dat* const restrict dat, char const* const restrict par)
 {
 	char const chrpar = par[0x0];
 	if (chrpar == '\x0') {return true;}
@@ -52,7 +67,7 @@ agb_chkchrpar (struct agb_dat * const restrict dat, char const* const restrict p
 }
 
 void
-agb_chkpar (struct agb_dat * const restrict dat, int const argc, char const* const* const argv) {
+agb_chkpar (struct agb_dat* const restrict dat, int const argc, char const* const* const argv) {
 	if (argc < 0x2) {
 		agb_hlp ();
 		agb_exi (agb_cnd_oky, NULL);
@@ -83,7 +98,7 @@ agb_chkpar (struct agb_dat * const restrict dat, int const argc, char const* con
 						agb_cpy();
 						agb_exi (agb_cnd_oky, NULL);
 					}
-					
+
 					fprintf (stderr,"Invalid long parameter \"%s\"\n", lngparam);
 					agb_exi (agb_cnd_err, NULL);
 				}
