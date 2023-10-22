@@ -1,3 +1,10 @@
+| F
+
+- Rename source directory: 'src' => 'source';
+- Update naming convention;
+- Update copyright holder name;
+- Update code style;
+
 | E
 
 - Code style adjustments;

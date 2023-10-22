@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -24,17 +24,13 @@
 
 #include <agbsum.h>
 
-#include <stdint.h>
+#include <stddef.h>
 
-uint8_t
-agb_getsum (void const* const restrict imgptr)
+void
+agb_initdata (struct agb_Data* const restrict data)
 {
-	uint8_t const* restrict img = imgptr;
-	uint8_t                 sum = UINT8_C(0x0);
-
-	for (char unsigned const* restrict pos = img; pos != img + agb_sumoff; ++pos) { sum += *pos; }
-
-	sum = -(UINT8_C(0x19) + sum);
-
-	return sum;
+	data->doPatch = false;
+	data->path    = NULL;
+	data->silent  = false;
+	data->image   = NULL;
 }

@@ -19,16 +19,16 @@ CFLAGS = \
 	-std=c99
 
 OBJS := \
-	src/chkpar.o \
-	src/cpy.o    \
-	src/exi.o    \
-	src/getsum.o \
-	src/hlp.o    \
-	src/inidat.o \
-	src/main.o   \
-	src/opn.o    \
-	src/pat.o    \
-	src/red.o
+	source/checkParams.o \
+	source/copyright.o   \
+	source/exit.o        \
+	source/getSum.o      \
+	source/help.o        \
+	source/initData.o    \
+	source/main.o        \
+	source/open.o        \
+	source/patch.o       \
+	source/read.o
 
 BIN := agbsum
 

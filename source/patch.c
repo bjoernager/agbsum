@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -26,15 +26,13 @@
 
 #include <stdio.h>
 
-FILE*
-agb_opn (char const* const restrict pth)
+void
+agb_patch (FILE* const restrict image, char unsigned sum)
 {
-	FILE* img = fopen (pth, "r+");
+	fseek (image, (long)(agb_sumDataStart + agb_sumOffset), SEEK_SET);
 
-	if (img == NULL) {
-		fputs ("Unable to open ROM\n", stderr);
-		agb_exi (agb_cnd_err, NULL);
+	if (fwrite (&sum, 0x1u, 0x1u, image) != 0x1u) {
+		fputs ("Unable to patch ROM\n", stderr);
+		agb_exit (agb_Cnd_Error, image);
 	}
-
-	return img;
 }

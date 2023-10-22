@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -28,10 +28,10 @@
 #include <stdio.h>
 
 void
-agb_cpy (void)
+agb_copyright (void)
 {
 	printf (
-		"agbsum #%" PRIX64 " - Copyright 2022-2023 Gabriel Jensen.\n"
+		"agbsum #%" PRIX64 " - Copyright 2022-2023 Gabriel Bj\u00F8rnager Jensen.\n"
 		"\n"
 		"This program is free software: you can redistribute it and/or modify it under\n"
 		"the terms of the GNU General Public License as published by the Free Software\n"
@@ -44,6 +44,6 @@ agb_cpy (void)
 		"\n"
 		"You should have received a copy of the GNU General Public License along with\n"
 		"this program. If not, see <https://www.gnu.org/licenses/>.\n",
-		agb_rel
+		agb_release
 	);
 }

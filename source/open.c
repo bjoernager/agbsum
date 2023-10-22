@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -26,17 +26,15 @@
 
 #include <stdio.h>
 
-void
-agb_red (void* const restrict buf, FILE* restrict img)
+FILE*
+agb_open (char const* const restrict path)
 {
-	// We only need to read the part of the image
-	// that is used for the checksum.
-	fseek (img, agb_iptsrt, SEEK_SET);
+	FILE* image = fopen (path, "r+");
 
-	size_t const num = agb_sumoff + 0x1u;
-
-	if (fread (buf, 0x1u, num, img) != num) {
-		fputs ("Unable to read ROM\n", stderr);
-		agb_exi (agb_cnd_err, img);
+	if (image == NULL) {
+		fputs ("Unable to open ROM\n", stderr);
+		agb_exit (agb_Cnd_Error, NULL);
 	}
+
+	return image;
 }

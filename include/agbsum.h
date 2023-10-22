@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -22,8 +22,8 @@
 	If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef agb_hdr
-#define agb_hdr
+#ifndef agb_header
+#define agb_header
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -39,48 +39,48 @@
 #define noreturn
 #endif
 
-#define agb_rel ((uint64_t)+0xEu)
+#define agb_release ((uint64_t)UINT64_C(+0xF))
 
-#define agb_iptsrt ((size_t)+0xA0u) // The part of the header used for calculating the checksum.
-#define agb_sumoff ((size_t)+0xBDu - agb_iptsrt)
+#define agb_sumDataStart ((size_t)+0xA0u) // The part of the header used for calculating the checksum.
+#define agb_sumOffset    ((size_t)+0xBDu - agb_sumDataStart)
 
-enum agb_cnd {
-	agb_cnd_err,
-	agb_cnd_oky,
+enum agb_Condition {
+	agb_Cnd_Error,
+	agb_Cnd_Ok,
 };
 
-struct agb_dat {
-	bool        dopat;
-	char const* pth;
-	bool        sil;
-	FILE*       img;
+struct agb_Data {
+	bool        doPatch;
+	char const* path;
+	bool        silent;
+	FILE*       image;
 };
 
 uint8_t
-agb_getsum (void const* restrict img);
+agb_getSum (void const* restrict image);
 
 void
-agb_pat (FILE* restrict img, char unsigned sum);
+agb_patch (FILE* restrict image, char unsigned sum);
 
 void
-agb_cpy (void);
+agb_copyright (void);
 
 void
-agb_hlp (void);
+agb_help (void);
 
 void
-agb_chkpar (struct agb_dat* restrict dat, int argc, char const* const* restrict argv);
+agb_checkParams (struct agb_Data* restrict dat, int argc, char const* const* restrict argv);
 
 void
-agb_inidat (struct agb_dat* restrict dat);
+agb_initdata (struct agb_Data* restrict dat);
 
 FILE*
-agb_opn (char const* restrict pth);
+agb_open (char const* restrict path);
 
 void
-agb_red (void* restrict buf, FILE* restrict img);
+agb_read (void* restrict buf, FILE* restrict image);
 
 noreturn void
-agb_exi (enum agb_cnd stat, FILE* img);
+agb_exit (enum agb_Condition stat, FILE* image);
 
 #endif

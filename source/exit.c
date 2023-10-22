@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -28,9 +28,9 @@
 #include <stdlib.h>
 
 noreturn void
-agb_exi (enum agb_cnd const cnd, FILE* restrict img)
+agb_exit (enum agb_Condition const condition, FILE* restrict image)
 {
-	if (img != NULL) { fclose (img); }
+	if (image != NULL) { fclose (image); }
 
-	exit (cnd == agb_cnd_oky ? EXIT_SUCCESS : EXIT_FAILURE);
+	exit (condition == agb_Cnd_Ok ? EXIT_SUCCESS : EXIT_FAILURE);
 }

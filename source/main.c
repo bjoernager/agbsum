@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -34,30 +34,32 @@
 
 int main (int const argc, char const* const* const argv)
 {
-	struct agb_dat dat;
-	agb_inidat (&dat);
-	agb_chkpar (&dat, argc, argv);
+	struct agb_Data data;
+	agb_initdata (&data);
+	agb_checkParams (&data, argc, argv);
 
-	dat.img = agb_opn (dat.pth);
+	data.image = agb_open (data.path);
 
-	char unsigned buf[agb_sumoff + 0x1];
+	char unsigned buffer[agb_sumOffset + 0x1];
 
-	agb_red (buf, dat.img);
+	agb_read (buffer, data.image);
 
 	{
-		char unsigned const sum    = agb_getsum (buf);
-		char unsigned const romsum = buf[agb_sumoff];
+		char unsigned const sum      = agb_getSum (buffer);
+		char unsigned const imageSum = buffer[agb_sumOffset];
 
-		if (romsum == sum || !dat.dopat) {
+		if (imageSum == sum || !data.doPatch) {
 			// Don't patch the ROM if it's already okay or we're not allowed to.
-			if (!dat.sil) {printf ("\"%s\": %hhX (%hhX in file)\n", dat.pth, sum, romsum);}
-			agb_exi (agb_cnd_oky, dat.img);
+			if (!data.silent) {printf ("\"%s\": %hhX (%hhX in file)\n", data.path, sum, imageSum);}
+			agb_exit (agb_Cnd_Ok, data.image);
 		}
 
-		agb_pat (dat.img, sum);
+		agb_patch (data.image, sum);
 
-		if (!dat.sil) {printf ("\"%s\" @ %zX: %hhX => %hhX\n", dat.pth, agb_iptsrt + agb_sumoff, romsum, sum);} // If we aren't supposed to print anything then don't.
+		// If we aren't supposed to print anything then
+		// don't.
+		if (!data.silent) { printf ("\"%s\" @ %zX: %hhX => %hhX\n", data.path, agb_sumDataStart + agb_sumOffset, imageSum, sum); }
 	}
 
-	agb_exi (agb_cnd_oky, dat.img);
+	agb_exit (agb_Cnd_Ok, data.image);
 }

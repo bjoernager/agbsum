@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -24,15 +24,23 @@
 
 #include <agbsum.h>
 
+#include <inttypes.h>
 #include <stdio.h>
 
 void
-agb_pat (FILE* const restrict img, char unsigned sum)
+agb_help (void)
 {
-	fseek (img, (long)(agb_iptsrt + agb_sumoff), SEEK_SET);
-
-	if (fwrite (&sum, 0x1u, 0x1u, img) != 0x1u) {
-		fputs ("Unable to patch ROM\n", stderr);
-		agb_exi (agb_cnd_err, img);
-	}
+	fputs (
+		"agbsum - Patch AGB image header checksums.\n"
+		"\n"
+		"Usage: agbsum [options] <image>\n"
+		"Options:\n"
+		"    --help -h    Print the help screen\n"
+		"    -p           Patch the image file\n"
+		"    -s           Don't print results\n"
+		"    --version    Print the version number\n"
+		"\n",
+		stdout
+	);
+	agb_copyright ();
 }

@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -24,13 +24,19 @@
 
 #include <agbsum.h>
 
-#include <stddef.h>
+#include <stdio.h>
 
 void
-agb_inidat (struct agb_dat* const restrict dat)
+agb_read (void* const restrict buffer, FILE* restrict image)
 {
-	dat->dopat = false;
-	dat->pth   = NULL;
-	dat->sil   = false;
-	dat->img   = NULL;
+	// We only need to read the part of the image
+	// that is used for the checksum.
+	fseek (image, agb_sumDataStart, SEEK_SET);
+
+	size_t const count = agb_sumOffset + 0x1u;
+
+	if (fread (buffer, 0x1u, count, image) != count) {
+		fputs ("Unable to read ROM\n", stderr);
+		agb_exit (agb_Cnd_Error, image);
+	}
 }

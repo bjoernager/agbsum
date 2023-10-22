@@ -1,5 +1,5 @@
 /*
-	Copyright 2022-2023 Gabriel Jensen.
+	Copyright 2022-2023 Gabriel Bjørnager Jensen.
 
 	This file is part of agbsum.
 
@@ -24,23 +24,17 @@
 
 #include <agbsum.h>
 
-#include <inttypes.h>
-#include <stdio.h>
+#include <stdint.h>
 
-void
-agb_hlp (void)
+uint8_t
+agb_getSum (void const* const restrict imagePtr)
 {
-	fputs (
-		"agbsum - Patch AGB image header checksums.\n"
-		"\n"
-		"Usage: agbsum [options] <image>\n"
-		"Options:\n"
-		"    --help -h    Print the help screen\n"
-		"    -p           Patch the image file\n"
-		"    -s           Don't print results\n"
-		"    --version    Print the version number\n"
-		"\n",
-		stdout
-	);
-	agb_cpy ();
+	uint8_t const* restrict image = imagePtr;
+	uint8_t                 sum   = UINT8_C(0x0);
+
+	for (char unsigned const* restrict position = image; position != image + agb_sumOffset; ++position) { sum += *position; }
+
+	sum = -(UINT8_C(0x19) + sum);
+
+	return sum;
 }
